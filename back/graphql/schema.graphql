@@ -1,0 +1,75 @@
+type Message {
+    token: String
+    user: Users
+}
+
+type Query {
+    login(
+     UserId: String!
+     UserPW: String!   
+    ): Message
+    
+    getPosts( 
+     Company: Int!
+    ): [Posts]
+
+    getMyposts( 
+     UserId: String!
+    ): [Posts]
+
+    readPost( 
+     No: Int!
+    ): [Posts]
+
+}
+
+type PostUpdateResult{
+    resultCount: Int!
+}
+
+type Mutation {
+
+    createPosts(
+     Title: String!
+     Contents: String!
+     UserId: String!
+     Company: String
+     CreatedDate: String
+    ): PostUpdateResult
+}
+
+
+type Corps {
+    No: Int!
+    CorpId: String!
+    CorpName: String!
+    CompanyRegNo: String
+    CreatedDate: String
+    ModifiedDate: String
+}
+
+type Users {
+    No: ID!
+    Company: Int!
+    UserId: String!
+    UserPW: String!
+    UserName: String!
+    CreatedDate: String
+    ModifiedDate: String
+}
+scalar DateTime
+
+type Posts {
+    No: ID!
+    Title: String!
+    Contents: String!
+    Files: String
+    UserId: String!
+    Counter: Int
+    Company: Int!
+    CreatedDate: DateTime
+    ModifiedDate: String
+
+}
+
+

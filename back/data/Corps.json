@@ -1,0 +1,19 @@
+[
+    {
+        "No": "1",
+        "CorpId": "A0001",
+        "CorpName": "인포플라",
+        "CompanyRegNo": "",
+        "CreatedDate": "2020-09-16",
+        "ModifiedDate": "0000-00-00"
+    },
+    
+    {
+        "No": "2",
+        "CorpId": "A0002",
+        "CorpName": "네이버",
+        "CompanyRegNo": "",
+        "CreatedDate": "2020-09-16",
+        "ModifiedDate": "0000-00-00"
+    }
+ ]
