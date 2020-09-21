@@ -163,7 +163,30 @@ const resolvers = {
                 log(`deletepost : ${error}`);
                 throw error;
             }
-        }
+        },
+
+        createReply: async (_, {
+            Contents = null,
+            UserId = null,
+            Company = null,
+            ParentPost = null,
+            CreatedDate = null,
+        }) => {
+            try {
+                let data = {
+                    "Contents": Contents,
+                    "UserId": UserId,
+                    "Company": Company,
+                    "ParentPost": ParentPost,
+                    "CreatedDate": CreatedDate,
+                };
+                const result = await dbInsert.createReply(data);
+                return { resultCount: result.affectedRows };
+            } catch (error) {
+                log(`createReply error: ${error}`);
+                throw error;
+            }
+        },
     
     }
 

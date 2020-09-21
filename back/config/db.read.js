@@ -19,7 +19,7 @@ const pool = mariadb.createPool({
 module.exports ={
     getPosts : async function(Company) {
         try {
-            let queryString = "select * from Posts where Company = '" + Company + "' order by No desc";
+            let queryString = "select * from Posts where Company = '" + Company + "' and ParentPost is null order by No desc";
 
             let result = await pool.query(queryString);
             //log("dbread.getPosts : " + queryString);
@@ -32,7 +32,7 @@ module.exports ={
     },
     getMyposts : async function(UserId) {
         try {
-            let queryString = "select * from Posts where UserId = '" + UserId + "' order by No desc";
+            let queryString = "select * from Posts where UserId = '" + UserId + "' and ParentPost is null order by No desc";
 
             let result = await pool.query(queryString);
             //log("dbread.getMyposts : " + queryString);

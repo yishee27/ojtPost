@@ -68,6 +68,14 @@ type Mutation {
     deletePosts(
      No:Int!
     ): PostUpdateResult
+
+    createReply(
+      Contents: String!
+      UserId: String!
+      Company: Int!
+      ParentPost: Int!
+      CreatedDate: String
+    ): PostUpdateResult
 }
 
 type Corps {
@@ -92,7 +100,7 @@ scalar DateTime
 
 type Posts {
     No: ID!
-    Title: String!
+    Title: String
     Contents: String!
     Files: String
     UserId: String!

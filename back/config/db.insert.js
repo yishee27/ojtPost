@@ -79,6 +79,27 @@ module.exports ={
             console.error("dbinsert.editPosts: " + err);
             throw err;
         }
-    }
+    },
+    createReply : async function(data) {
+        try {
+            let queryString = 
+              "insert into Posts (Contents,UserId,Company,ParentPost,CreatedDate) " +
+              "values (" +
+              "NULLIF(" + data['Contents'] + ", null), " +
+              "NULLIF(" + data['UserId'] + ", null), " +
+              "NULLIF(" + data['Company'] + ", null), " +
+              "NULLIF(" + data['ParentPost'] + ", null), " +
+              "now() " +
+              ")";
+
+            let result = await pool.query(queryString);
+            log("dbinsert.createReply : " + queryString);
+            return result;
+        }
+        catch (err) {
+            console.error("dbinsert.createReply: " + err);
+            throw err;
+        }
+    },    
    
 }
