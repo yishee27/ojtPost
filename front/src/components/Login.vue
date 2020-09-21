@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>LOGIN</h1>
+    <h1 style="font-weight: bold; margin-bottom:4rem;">LOGIN</h1>
     <b-row>
       <b-col lg="5" class="pb-2"></b-col>
       <b-col lg="2" class="pb-2">
@@ -13,8 +13,7 @@
         <b-form-input v-model="password" placeholder="PASSWORD"></b-form-input>
       </b-col>
     </b-row>
-
-    <div>
+    <div style="margin-top:1rem;">
       <b-button v-on:click="join()"> Join </b-button>
       <b-button variant="primary" v-on:click="login()">Login</b-button>
     </div>
@@ -39,6 +38,11 @@ export default {
         path:'/list'
       })
     },
+    join() {
+      this.$router.push({
+        path:'/join'
+      })
+    },
     async login() {
       this.token = undefined;
       try {
@@ -51,6 +55,7 @@ export default {
                   Company
                   UserId
                   UserName
+                  No
                 }
               }
             }

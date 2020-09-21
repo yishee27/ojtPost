@@ -5,7 +5,7 @@
     </div>
     <div id="firstTitle">
       <h2 id="title">게시글 수정/삭제</h2>
-      <b-button id="rightBtn" variant="light">삭제</b-button>
+      <b-button id="rightBtn" variant="outline-primary" @click="deletePost">삭제</b-button>
     </div>
     <div id="inputDiv">
       <b-form-input id="inputTitle" v-model="Title" ></b-form-input>
@@ -14,7 +14,7 @@
 
     <div id="btnDiv">
         <b-button variant="light" @click="back">취소</b-button>
-        <b-button variant="primary" @click="editPosts">수정</b-button>
+        <b-button variant="primary" @click="editPost">수정</b-button>
     </div>
 
   </div>
@@ -33,8 +33,9 @@
       const postId = Number(this.$route.params.postId);
       const item = this.readPost(postId);
       return{
-        Title: item,
-        Contents: item.Contents
+        postId : postId,
+        Title: null,
+        Contents: null
      };
    },  
     methods: {
@@ -48,45 +49,69 @@
         const res = await axios.post('http://localhost:9000/graphql',{
             query: `
               query{
-                readPost(No:${postId}){
+                readPosts(No:${postId}){
                  Title
                  Contents
               }
             }`
           });
-          this.Title = res.data.data.readPost[0]["Title"];
-          this.Contents = res.data.data.readPost[0]["Contents"];
+          this.Title = res.data.data.readPosts[0]["Title"];
+          this.Contents = res.data.data.readPosts[0]["Contents"];
         
         } catch (error) {
-          console.log( "getlistError")
+          console.log( "readpostError")
           throw error;       
         }
       }, 
 
-      async editPosts() {
+      async editPost() {
         try {
-        await axios.post(
-         'http://localhost:9000/graphql',{
-           query: `
-           mutation{
-            editPosts(
-              Title: "'${this.editData['Title']}'"
-              Contents: "'${this.editData['Contents']}'"
-              CreatedDate: ""
-            ){
-               resultCount
-            }
-          }`
-         },
-        );
-        alert(`수정되었습니다.`);
-        this.back();
-      } catch (error) {
-        alert(`editPost Funtion error : ${error}`);
-        console.log(`eidtPost Funtion error : ${error}`);
-        throw error;
+          await axios.post(
+            'http://localhost:9000/graphql',{
+              query: `
+                mutation{
+                  editPosts(
+                    No:${this.postId}
+                    Title: "'${this.Title}'"
+                    Contents: "'${this.Contents}'"
+                    ModifiedDate: ""
+                ){
+                    resultCount
+                }
+              }`
+            },
+          );
+          alert(`수정되었습니다.`);
+          this.back();
+        } catch (error) {
+          console.log( this.postId );
+          console.log(`editPost Funtion error : ${error}`);
+          throw error;
+        }
+      },
+
+      async deletePost() {
+        try {
+          await axios.post(
+            'http://localhost:9000/graphql',{
+              query: `
+                mutation{
+                  deletePosts(
+                    No:${this.postId}
+                ){
+                    resultCount
+                }
+              }`
+            },
+          );
+          alert(`삭제되었습니다.`);
+          this.back();
+        } catch (error) {
+          console.log(`deletePost Funtion error : ${error}`);
+          throw error;
+        }
       }
-    },
+
     }
   }
 </script>

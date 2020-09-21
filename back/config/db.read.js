@@ -19,10 +19,10 @@ const pool = mariadb.createPool({
 module.exports ={
     getPosts : async function(Company) {
         try {
-            let queryString = "select * from Posts where Company = '" + Company + "'";
+            let queryString = "select * from Posts where Company = '" + Company + "' order by No desc";
 
             let result = await pool.query(queryString);
-            log("dbread.getPosts : " + queryString);
+            //log("dbread.getPosts : " + queryString);
             return result;
         }
         catch (err) {
@@ -32,10 +32,10 @@ module.exports ={
     },
     getMyposts : async function(UserId) {
         try {
-            let queryString = "select * from Posts where UserId = '" + UserId + "'";
+            let queryString = "select * from Posts where UserId = '" + UserId + "' order by No desc";
 
             let result = await pool.query(queryString);
-            log("dbread.getMyposts : " + queryString);
+            //log("dbread.getMyposts : " + queryString);
             return result;
         }
         catch (err) {
@@ -43,13 +43,37 @@ module.exports ={
             throw err;
         }
     },
-    readPost : async function(No) {
+    readPosts : async function(No) {
         try {
             let queryString = "select * from Posts where No = " + No ;
 
             let result = await pool.query(queryString);
-            log("dbread.readPosts : " + queryString);
+            //log("dbread.readPosts : " + queryString);
             return result;
+        }
+        catch (err) {
+            console.error("readPosts Error: " + err);
+            throw err;
+        }
+    },
+
+    IdDuplCheck : async function(UserId) {
+        try {
+            let queryString = "select * from Users where UserId ='" + UserId + "'" ;
+
+            let result = await pool.query(queryString);
+
+            let resultStr = "";
+            if( result.length == 0 ){
+                resultStr = "nonexist";
+            }
+            else{
+                resultStr ="exist" //중복됨
+            }
+
+            return{
+                resultStr
+            }
         }
         catch (err) {
             console.error("readPosts Error: " + err);

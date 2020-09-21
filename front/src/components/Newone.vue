@@ -29,6 +29,7 @@
     components:{
       'Header': Header
     },
+
     data() {
       return{
         createData: {
@@ -38,7 +39,7 @@
           "Company" : this.$cookie.get('Company')
        }
      };
-   },
+    },
     
     methods: {
       back() {
@@ -47,36 +48,36 @@
         })
       },
 
-     async createPosts() {
-      try {
-        if(this.createData['Title'] === null || this.createData['Contents'] === null ){
-          alert("제목,내용을 입력해 주세요");
-          return;
-        }
-        await axios.post(
-         'http://localhost:9000/graphql',{
-           query: `
-           mutation{
-            createPosts(
-              Title: "'${this.createData['Title']}'"
-              Contents: "'${this.createData['Contents']}'"
-              UserId: "'${this.createData['UserId']}'"
-              Company: "${this.createData['Company']}"
-              CreatedDate: ""
-            ){
+      async createPosts() {
+        try {
+          if(this.createData['Title'] === null || this.createData['Contents'] === null ){
+            alert("제목,내용을 입력해 주세요");
+            return;
+          }
+          await axios.post(
+           'http://localhost:9000/graphql',{
+             query: `
+              mutation{
+                createPosts(
+                Title: "'${this.createData['Title']}'"
+                Contents: "'${this.createData['Contents']}'"
+                UserId: "'${this.createData['UserId']}'"
+                Company: "${this.createData['Company']}"
+                CreatedDate: ""
+              ){
                resultCount
-            }
-          }`
-         },
+              }
+            }`
+          },
         );
-        alert(`저장되었습니다.`);
-        this.back();
-      } catch (error) {
-        alert(`createPost Funtion error : ${error}`);
-        console.log(`createPost Funtion error : ${error}`);
-        throw error;
+          alert(`저장되었습니다.`);
+          this.back();
+        } catch (error) {
+            alert(`createPost Funtion error : ${error}`);
+            console.log(`createPost Funtion error : ${error}`);
+            throw error;
+        }
       }
-    },
     }
   }
 </script>

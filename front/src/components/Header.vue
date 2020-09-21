@@ -4,12 +4,12 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item href="#" @click="list">게시판</b-nav-item>
-        <b-nav-item href="#" @click="mylist">내가쓴글</b-nav-item>
+        <b-nav-item href="#" @click="mylist">내가 쓴 글</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-navbar-brand href="#" disabled>안녕하세요 {{UserName}} 님</b-navbar-brand>
+        <b-navbar-brand href="#" @click="list">안녕하세요 {{UserName}} 님</b-navbar-brand>
         <b-nav-item href="#" @click="logout">Logout</b-nav-item>
       </b-navbar-nav>
     </b-collapse>

@@ -64,7 +64,7 @@
         const res = await axios.post('http://localhost:9000/graphql',{
             query: `
               query{
-                readPost(No:${postId}){
+                readPosts(No:${postId}){
                  No
                  Title
                  Contents
@@ -74,10 +74,10 @@
               }
             }`
           });
-          this.item = res.data.data.readPost[0];
+          this.item = res.data.data.readPosts[0];
         
         } catch (error) {
-          console.log( "getlistError")
+          console.log( "readpostError")
           throw error;       
         }
       }, 

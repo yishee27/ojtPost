@@ -3,6 +3,10 @@ type Message {
     user: Users
 }
 
+type resultStr {
+    resultStr: String
+}
+
 type Query {
     login(
      UserId: String!
@@ -17,27 +21,54 @@ type Query {
      UserId: String!
     ): [Posts]
 
-    readPost( 
+    readPosts( 
      No: Int!
     ): [Posts]
 
+    IdDuplCheck( 
+     UserId: String!
+    ): resultStr
 }
 
 type PostUpdateResult{
+    resultCount: Int
+}
+
+type UserUpdateResult{
     resultCount: Int!
 }
 
 type Mutation {
 
+    createUsers(
+      UserId: String!
+      UserPW: String!
+      Company: Int!
+      UserName: String!
+      UserEmail: String
+      UserMobile: String
+      CreatedDate: String
+    ): UserUpdateResult
+
     createPosts(
+      Title: String!
+      Contents: String!
+      UserId: String!
+      Company: String
+      CreatedDate: String
+    ): PostUpdateResult
+
+    editPosts(
+     No:Int!
      Title: String!
      Contents: String!
-     UserId: String!
-     Company: String
-     CreatedDate: String
+     ModifiedDate: String
+    ): PostUpdateResult
+
+    deletePosts(
+     No:Int!
     ): PostUpdateResult
 }
-
 
 type Corps {
     No: Int!

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
+import Join from '@/components/Join'
 import List from '@/components/List'
 import Newone from '@/components/Newone'
 import Show from '@/components/Show'
@@ -15,6 +16,10 @@ export default new Router({
     {
       path: '/',
       component: Login
+    },
+    {
+      path: '/join',
+      component: Join
     },
     {
       path: '/list',
