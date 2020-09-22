@@ -204,7 +204,7 @@
 }
 .subTitle{
     display: inline-block;
-    width:25%;
+    width:30%;
     padding-right:.5rem;
     text-align: right;
     font-size: 1.3rem;

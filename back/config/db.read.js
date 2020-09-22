@@ -79,6 +79,19 @@ module.exports ={
             console.error("readPosts Error: " + err);
             throw err;
         }
+    },
+    getReply : async function(No) {
+        try {
+            let queryString = "select * from Posts where ParentPost = " + No ;
+
+            let result = await pool.query(queryString);
+            //log("dbread.readPosts : " + queryString);
+            return result;
+        }
+        catch (err) {
+            console.error("getReply Error: " + err);
+            throw err;
+        }
     }
    
 }

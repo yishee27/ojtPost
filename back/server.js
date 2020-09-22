@@ -8,7 +8,6 @@ const app = express();
 const cors = require('cors');
 app.use(cors())
 
-
 const fs = require('fs')
 const typeDefs = fs.readFileSync('./graphql/schema.graphql',{encoding:'utf-8'})
 const resolvers = require('./graphql/resolvers')

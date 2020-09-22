@@ -22,6 +22,12 @@
       <h6>댓글</h6>
     </div>
 
+    <div id="contentDiv">
+      <p v-for="i in reply">
+        {{i}}
+        </p>
+    </div>
+
     <div id="replyDiv">
       <b-row>
         <b-col lg="10">  
@@ -47,8 +53,9 @@
       'Header': Header
     },
     data() {
-      const postId = Number(this.$route.params.postId);
+      let postId = Number(this.$route.params.postId);
       const item = this.readPost(postId);
+
       return{
         item : item,
         replyData:{
@@ -56,7 +63,8 @@
           "UserId" : this.$cookie.get('UserId'),
           "Company" : this.$cookie.get('Company'),
           "postId": postId
-        }
+        },
+        reply: this.getReply(postId)
       };
     },
     methods: {
@@ -106,8 +114,36 @@
           });
           alert("댓글이 저장되었습니다.");
 
+        } catch (error) {;
+          throw error;       
+        }
+      },
+
+      async getReply(postId) {
+        try {
+          const res = await axios.post('http://localhost:9000/graphql',{
+            query: `
+              query{
+                getReply( 
+                  No: ${postId}
+               ){
+                UserId
+                Contents
+              }
+            }`
+          });
+          let tmpArr = res.data.data.getReply;
+          let replyArr = [];
+
+          for( var i=0; i<tmpArr.length; i++){
+            var tmp = "";
+            tmp = tmpArr[i]['UserId'] + " : " + tmpArr[i]['Contents'];            
+            replyArr.push(tmp);
+          }
+
+          this.reply = replyArr;
+ 
         } catch (error) {
-          console.log( "createReply");
           throw error;       
         }
       }

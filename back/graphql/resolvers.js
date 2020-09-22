@@ -12,9 +12,6 @@ const resolvers = {
             try {
                 let result = await login.login(UserId, UserPW);
                 //log("User Logined with this result : " + JSON.stringify(result));
-                if (result === undefined) {
-                    throw new Error("no such user");
-                }
                 return result;
             } catch (error) {
                 log(`User Login is failed because of this error : ${error}`);
@@ -26,9 +23,6 @@ const resolvers = {
             try {
                 let result = await dbRead.getPosts(Company);
                 //log("getPosts : " + JSON.stringify(result));
-                if (result === undefined) {
-                    throw new Error("no such post");
-                }
                 return result;
             } catch (error) {
                 log(`post list is failed because of this error : ${error}`);
@@ -40,9 +34,6 @@ const resolvers = {
             try {
                 let result = await dbRead.getMyposts(UserId);
                 //log("getMyposts : " + JSON.stringify(result));
-                if (result === undefined) {
-                    throw new Error("no such Mypost");
-                }
                 return result;
             } catch (error) {
                 //log(`Mypost list is failed because of this error : ${error}`);
@@ -54,9 +45,6 @@ const resolvers = {
             try {
                 let result = await dbRead.readPosts(No);
                 //log("readPosts : " + JSON.stringify(result));
-                if (result === undefined) {
-                    throw new Error("no such readpost");
-                }
                 return result;
             } catch (error) {
                 log(`readpost : ${error}`);
@@ -68,12 +56,19 @@ const resolvers = {
             try {
                 let result = await dbRead.IdDuplCheck(UserId);
                 //log("getPosts : " + JSON.stringify(result));
-                if (result === undefined) {
-                    throw new Error("resolver idduplcheck error");
-                }
                 return result;
             } catch (error) {
                 log(`IdDuplCheck is failed because of this error : ${error}`);
+                throw error;
+            }
+        },
+        getReply: async function(_, {No})  {
+            try {
+                let result = await dbRead.getReply(No);
+                //log("getReply : " + JSON.stringify(result));
+                return result;
+            } catch (error) {
+                log(`getReply is failed because of this error : ${error}`);
                 throw error;
             }
         }

@@ -1,12 +1,3 @@
-type Message {
-    token: String
-    user: Users
-}
-
-type resultStr {
-    resultStr: String
-}
-
 type Query {
     login(
      UserId: String!
@@ -28,14 +19,10 @@ type Query {
     IdDuplCheck( 
      UserId: String!
     ): resultStr
-}
 
-type PostUpdateResult{
-    resultCount: Int
-}
-
-type UserUpdateResult{
-    resultCount: Int!
+    getReply( 
+     No: Int!
+    ): [Posts]
 }
 
 type Mutation {
@@ -76,6 +63,23 @@ type Mutation {
       ParentPost: Int!
       CreatedDate: String
     ): PostUpdateResult
+}
+
+type Message {
+    token: String
+    user: Users
+}
+
+type resultStr {
+    resultStr: String
+}
+
+type PostUpdateResult{
+    resultCount: Int
+}
+
+type UserUpdateResult{
+    resultCount: Int!
 }
 
 type Corps {
