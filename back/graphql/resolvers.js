@@ -8,6 +8,7 @@ const log = (msg) => logger.info(msg);
 
 const resolvers = {
     Query: {
+
         login: async function (_, {UserId, UserPW}) {
             try {
                 let result = await login.login(UserId, UserPW);
@@ -74,6 +75,7 @@ const resolvers = {
         }
     },
     Mutation: {
+
         createUsers: async (_, {
             UserId = null,
             UserPW = null,

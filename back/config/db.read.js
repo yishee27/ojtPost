@@ -17,6 +17,30 @@ const pool = mariadb.createPool({
 })
 
 module.exports ={
+
+    getUserByIdExe: async function (UserId = null) {
+        try {
+            let queryString =
+                "select * " +
+                "from Users ";
+
+            if (UserId) {
+                queryString +=
+                    "where UserId = " + UserId;
+            }
+
+
+            let result;
+            log('getUserByIdExe executed');
+            result = await pool.query(queryString);
+            return result;
+        }
+        catch (err) {
+            console.error("getUserByIdExe Error: " + err);
+            throw err;
+        }
+    },
+
     getPosts : async function(Company) {
         try {
             let queryString = "select * from Posts where Company = '" + Company + "' and ParentPost is null order by No desc";

@@ -29,7 +29,7 @@ module.exports={
             let user = result.shift();
             console.log(user);
             const token = jwt.sign({
-                userId : UserId,
+                UserId : UserId,
             },SECRET_KEY,{
                 expiresIn: '7d'
             })
@@ -52,7 +52,7 @@ module.exports={
 
             try {
                 const decoded = jwt.verify(token, SECRET_KEY);
-                //log("decoded result : " + JSON.stringify(decoded));
+                log("decoded result : " + JSON.stringify(decoded));
                 return decoded;  
             } catch (error) {
                 log(`invalid token error : ${error}`);

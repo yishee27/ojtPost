@@ -21,13 +21,23 @@
   import axios from 'axios'
   import store from '../../store/store'
 
+console.log(store.state);
   export default {
+   
     name: 'Header',
-    data(){
-      return {
-        UserName : this.$cookie.get('UserName')
+    computed: {
+      isAuthenticated: function() {
+        console.log(localStorage);
+        if(localStorage.accessToken) return true;
+        else return false
       }
     },
+    data(){
+      return {
+        UserName : store.state.UserName
+      }
+    },
+
     methods: {
       list() {
         this.$router.push({
@@ -41,25 +51,14 @@
       },
       logout(){
        store.dispatch('LOGOUT');
-       deleteAllCookies();
        this.$router.push({
          path:'/'
        })
      }
+      
     }
   }
 
-  //쿠키 삭제
-  function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-  }
 </script>
  
 <style scoped>

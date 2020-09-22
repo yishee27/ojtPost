@@ -113,6 +113,7 @@
             }`
           });
           alert("댓글이 저장되었습니다.");
+          window.location.reload();
 
         } catch (error) {;
           throw error;       

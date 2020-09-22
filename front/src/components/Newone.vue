@@ -23,6 +23,7 @@
 <script>
   import axios from 'axios'
   import Header from './Header'
+  import store from '../../store/store'
   
   export default {
     name: 'Newone',
@@ -35,8 +36,8 @@
         createData: {
           "Title": null,
           "Contents": null,
-          "UserId" : this.$cookie.get('UserId'),
-          "Company" : this.$cookie.get('Company')
+          "UserId" : store.state.UserId,
+          "Company" : store.state.Company
        }
      };
     },

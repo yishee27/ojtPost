@@ -16,14 +16,16 @@
 <script>
   import axios from 'axios'
   import Header from './Header'
+  import store from '../../store/store'
 
+  console.log(store.state  );
   export default {
     name: 'Mylist',
     components:{
       'Header': Header
     },
     data() {
-      const UserId = this.$cookie.get('UserId');
+      const UserId = store.state.UserId;
       return {
         fields: [ 
             {key:"No", label:'No.'},

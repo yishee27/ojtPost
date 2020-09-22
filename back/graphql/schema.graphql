@@ -1,4 +1,8 @@
 type Query {
+    getDecodeToken(
+        token:String!
+    ):[Users]
+
     login(
      UserId: String!
      UserPW: String!   
@@ -26,6 +30,10 @@ type Query {
 }
 
 type Mutation {
+
+    getDecodeToken(
+        token:String!
+    ): [Users]
 
     createUsers(
       UserId: String!

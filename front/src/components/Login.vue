@@ -30,7 +30,8 @@ export default {
   data: () => ({
     uid: '',
     password: '',
-    token: ''
+    token: '',
+    userData: ''
   }),
   methods: {
     list() {
@@ -61,14 +62,13 @@ export default {
             }
           `
         })
-        
+ 
         this.token = res.data.data.login.token;
-        store.dispatch('LOGIN', this.token);
-        document.cookie = `accessToken=${res.data.data.login.token}`;
-        document.cookie = `Company=${res.data.data.login.user.Company}`;
-        document.cookie = `UserId=${res.data.data.login.user.UserId}`;
-        document.cookie = `UserName=${res.data.data.login.user.UserName}`;
-        document.cookie = `UserNo=${res.data.data.login.user.No}`;
+        store.dispatch('LOGIN',  res.data.data.login.token);
+        store.dispatch('UserName', res.data.data.login.user.UserName);
+        store.dispatch('UserNo', res.data.data.login.user.No);
+        store.dispatch('UserId', res.data.data.login.user.UserId);
+        store.dispatch('Company', res.data.data.login.user.Company);
 
         axios.defaults.headers.common['x-access-token'] = res.data.data.accessToken;
 

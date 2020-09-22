@@ -10,13 +10,17 @@
     <div id="listTable">
       <b-table striped hover :items="items" :fields="fields" @row-clicked="rowClick"></b-table>
     </div>
+
   </div>
+
+
  
 </template>
 
 <script>
   import axios from 'axios'
   import Header from './Header'
+  import store from '../../store/store'
 
   export default {
     name: 'List',
@@ -24,7 +28,8 @@
       'Header': Header
     },
     data() {
-      const Company = this.$cookie.get('Company');
+      const Company = store.state.Company;
+ 
       return {
         fields: [ 
             {key:"No", label:'No.'},
@@ -34,6 +39,8 @@
             {key:"Counter", label:'조회수'}
         ],
         items:this.getlist(Company),
+       
+    
       }
     },
     methods: {

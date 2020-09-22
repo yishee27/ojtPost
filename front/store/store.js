@@ -6,7 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        accessToken : null
+        accessToken : null,
+        UserName : null,
+        UserId : null,
+        UserNo : null,
+        Company : null
+
     },
     getter : {
 
@@ -14,7 +19,6 @@ export default new Vuex.Store({
     mutations : {
         LOGIN(state,accessToken){
             state.accessToken = accessToken
-
             localStorage.accessToken = accessToken
             
             const enhanceAccessToeken = () => {
@@ -28,7 +32,24 @@ export default new Vuex.Store({
         LOGOUT(state) {
             state.accessToken = null
             delete localStorage.accessToken
+        },
+
+        UserName(state, UserName) {
+            state.UserName = UserName;
+        },
+
+        UserId(state, UserId) {
+            state.UserId = UserId;
+        },
+
+        UserNo(state, UserNo) {
+            state.UserNo = UserNo;
+        },
+
+        Company(state, Company) {
+            state.Company = Company;
         }
+
     },
 
     actions: {
@@ -39,7 +60,20 @@ export default new Vuex.Store({
         LOGOUT ({commit}){
             Axios.defaults.headers.common['Authorization'] = undefined
             commit('LOGOUT');
+        },
+        UserName ({commit},UserName) {
+            commit('UserName', UserName);
+        },
+        UserId ({commit},UserId) {
+            commit('UserId', UserId);
+        },
+        UserNo ({commit},UserNo) {
+            commit('UserNo', UserNo);
+        },
+        Company ({commit},Company) {
+            commit('Company', Company);
         }
+
     }
 
     
