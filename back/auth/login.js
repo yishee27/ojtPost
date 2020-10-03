@@ -1,4 +1,4 @@
-const mariadb = require('mariadb'); 
+
 var config = require('../config/db.config'); 
 const jwt = require('jsonwebtoken');
 
@@ -6,16 +6,20 @@ const logger = require('winston');
 const log = (msg) => logger.info(msg);
 const SECRET_KEY = "SeCrEtKeY1234";
 
-const pool = mariadb.createPool({
-    host: config.host,
-    user: config.user,
-    password: config.password,
-    database: config.database,
-    port:3306,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-})
+const pool = async function () {
+    try {
+        mongoose.connect('mongodb://'+config.user+':'+config.password+'@'+config.host+':'+config.port+'/admin',{dbName:'ojt', useNewUrlParser: true,useUnifiedTopology: true},function(err){
+            if(err){
+                console.error('mongodb connection err',err);
+            }else {
+                console.log('mongodb connected');
+            };
+        });
+    } catch (err) {
+        console.log("Connection error : " + err);
+        throw err;
+    }
+}
 
 module.exports={
     login: async function (UserId,UserPW){

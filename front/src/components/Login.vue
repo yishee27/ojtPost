@@ -56,17 +56,18 @@ export default {
                   Company
                   UserId
                   UserName
-                  No
+                  _id
                 }
               }
             }
           `
         })
+        console.log(res);
  
         this.token = res.data.data.login.token;
         store.dispatch('LOGIN',  res.data.data.login.token);
         store.dispatch('UserName', res.data.data.login.user.UserName);
-        store.dispatch('UserNo', res.data.data.login.user.No);
+        store.dispatch('UserObjectId', res.data.data.login.user._id);
         store.dispatch('UserId', res.data.data.login.user.UserId);
         store.dispatch('Company', res.data.data.login.user.Company);
 

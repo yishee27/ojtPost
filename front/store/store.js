@@ -9,7 +9,7 @@ export default new Vuex.Store({
         accessToken : null,
         UserName : null,
         UserId : null,
-        UserNo : null,
+        UserObjectId : null,
         Company : null
 
     },
@@ -42,8 +42,8 @@ export default new Vuex.Store({
             state.UserId = UserId;
         },
 
-        UserNo(state, UserNo) {
-            state.UserNo = UserNo;
+        UserObjectId(state, UserObjectId) {
+            state.UserObjectId = UserObjectId;
         },
 
         Company(state, Company) {
@@ -67,8 +67,8 @@ export default new Vuex.Store({
         UserId ({commit},UserId) {
             commit('UserId', UserId);
         },
-        UserNo ({commit},UserNo) {
-            commit('UserNo', UserNo);
+        UserObjectId ({commit},UserObjectId) {
+            commit('UserObjectId', UserObjectId);
         },
         Company ({commit},Company) {
             commit('Company', Company);

@@ -60,9 +60,9 @@
              query: `
               mutation{
                 createPosts(
-                Title: "'${this.createData['Title']}'"
-                Contents: "'${this.createData['Contents']}'"
-                UserId: "'${this.createData['UserId']}'"
+                Title: "${this.createData['Title']}"
+                Contents: "${this.createData['Contents']}"
+                UserId: "${this.createData['UserId']}"
                 Company: "${this.createData['Company']}"
                 CreatedDate: ""
               ){

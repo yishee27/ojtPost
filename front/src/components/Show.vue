@@ -46,6 +46,7 @@
 <script>
   import axios from 'axios'
   import Header from './Header'
+  import store from '../../store/store'
 
   export default {
     name: 'Show',
@@ -53,15 +54,16 @@
       'Header': Header
     },
     data() {
-      let postId = Number(this.$route.params.postId);
+      let postId = this.$route.params.postId;
       const item = this.readPost(postId);
+
 
       return{
         item : item,
         replyData:{
           "reply" :null,
-          "UserId" : this.$cookie.get('UserId'),
-          "Company" : this.$cookie.get('Company'),
+          "UserId" : store.state.UserId,
+          "Company" : store.state.Company,
           "postId": postId
         },
         reply: this.getReply(postId)
@@ -78,8 +80,7 @@
         const res = await axios.post('http://localhost:9000/graphql',{
             query: `
               query{
-                readPosts(No:${postId}){
-                 No
+                readPosts(Id:"${postId}"){
                  Title
                  Contents
                  UserId
@@ -102,9 +103,9 @@
             query: `
               mutation{
                 createReply(
-                 Contents: "'${this.replyData['reply']}'"
-                 UserId: "'${this.replyData['UserId']}'"
-                 ParentPost: ${this.replyData['postId']}
+                 Contents: "${this.replyData['reply']}"
+                 UserId: "${this.replyData['UserId']}"
+                 ParentPost: "${this.replyData['postId']}"
                  Company: ${this.replyData['Company']}
                  CreatedDate: ""
               ){
@@ -126,7 +127,7 @@
             query: `
               query{
                 getReply( 
-                  No: ${postId}
+                  Id: "${postId}"
                ){
                 UserId
                 Contents

@@ -1,4 +1,6 @@
 type Query {
+    allUser: [Users]
+    
     getDecodeToken(
         token:String!
     ):[Users]
@@ -7,10 +9,11 @@ type Query {
      UserId: String!
      UserPW: String!   
     ): Message
-    
+
     getPosts( 
      Company: Int!
     ): [Posts]
+
 
     getMyposts( 
      UserId: String!

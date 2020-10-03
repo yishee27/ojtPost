@@ -165,12 +165,12 @@
                query: `
                 mutation{
                   createUsers(
-                    UserId: "'${this.createUser['UserId']}'"
-                    UserPW: "'${this.createUser['UserPW']}'"
+                    UserId: "${this.createUser['UserId']}"
+                    UserPW: "${this.createUser['UserPW']}"
                     Company: ${this.createUser['Company']}
-                    UserName: "'${this.createUser['UserName']}'"
-                    UserEmail: "'${this.createUser['UserEmail']}'"
-                    UserMobile: "'${this.createUser['UserMobile']}'"
+                    UserName: "${this.createUser['UserName']}"
+                    UserEmail: "${this.createUser['UserEmail']}"
+                    UserMobile: "${this.createUser['UserMobile']}"
                     CreatedDate: ""
                   ){
                    resultCount

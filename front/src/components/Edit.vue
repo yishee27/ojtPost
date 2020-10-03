@@ -30,7 +30,7 @@
       'Header': Header
     },
     data() {
-      const postId = Number(this.$route.params.postId);
+      const postId = this.$route.params.postId;
       const item = this.readPost(postId);
       return{
         postId : postId,
@@ -49,7 +49,7 @@
         const res = await axios.post('http://localhost:9000/graphql',{
             query: `
               query{
-                readPosts(No:${postId}){
+                readPosts(Id:"${postId}"){
                  Title
                  Contents
               }
@@ -71,9 +71,9 @@
               query: `
                 mutation{
                   editPosts(
-                    No:${this.postId}
-                    Title: "'${this.Title}'"
-                    Contents: "'${this.Contents}'"
+                    Id:"${this.postId}"
+                    Title: "${this.Title}"
+                    Contents: "${this.Contents}"
                     ModifiedDate: ""
                 ){
                     resultCount
@@ -97,7 +97,7 @@
               query: `
                 mutation{
                   deletePosts(
-                    No:${this.postId}
+                    Id:"${this.postId}"
                 ){
                     resultCount
                 }

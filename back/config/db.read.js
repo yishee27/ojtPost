@@ -1,20 +1,35 @@
 //db를 읽기만 하는 함수 모음
-const mariadb = require('mariadb'); 
-var config = require('./db.config'); 
+const db = require('./db.connect');
+
+
+var mongoose =require('mongoose');
+
+const config = require("./db.config");
+
+mongoose.Promise = global.Promise;
+
+const Users = require('../models/Users.js');
+const Posts = require('../models/Posts.js');
+const Corps = require('../models/Corps.js');
 
 const logger = require('winston');
 const log = (msg) => logger.info(msg);
 
-const pool = mariadb.createPool({
-    host: config.host,
-    user: config.user,
-    password: config.password,
-    database: config.database,
-    port:3306,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-})
+
+const pool = async function () {
+    try {
+        mongoose.connect('mongodb://'+config.user+':'+config.password+'@'+config.host+':'+config.port+'/admin',{dbName:'post', useNewUrlParser: true,useUnifiedTopology: true},function(err){
+            if(err){
+                log('mongodb connection err'+err);
+            }else {
+                log('mongodb connected');
+            };
+        });
+    } catch (err) {
+        console.log("Connection error : " + err);
+        throw err;
+    }
+}
 
 module.exports ={
 
@@ -43,10 +58,18 @@ module.exports ={
 
     getPosts : async function(Company) {
         try {
-            let queryString = "select * from Posts where Company = '" + Company + "' and ParentPost is null order by No desc";
+            pool();
+            log(pool());
 
-            let result = await pool.query(queryString);
-            //log("dbread.getPosts : " + queryString);
+            let result;
+
+            //result = await Posts.find({Company:Company,ParentPost:null}).sort({"No":-1});
+            
+            //let queryString = "find({Company:" + Company + ",ParentPost:null}).sort({'No:-1})";
+
+            result = await Posts.find({Company:Company});
+
+            //log("dbread.getPosts : " + result);
             return result;
         }
         catch (err) {

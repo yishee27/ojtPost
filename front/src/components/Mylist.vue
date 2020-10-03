@@ -28,7 +28,6 @@
       const UserId = store.state.UserId;
       return {
         fields: [ 
-            {key:"No", label:'No.'},
             {key:"Title", label:'제목'},
             {key:"CreatedDate", label:'날짜'},
             {key:"Counter", label:'조회수'}
@@ -39,7 +38,7 @@
     methods: {
       rowClick(item, index, e){
         this.$router.push({
-          path:`/edit/${item.No}`
+          path:`/edit/${item._id}`
         })
       },
       async getMylist(UserId) {
@@ -48,7 +47,7 @@
             query: `
               query{
                 getMyposts(UserId:"${UserId}"){
-                 No
+                 _id
                  Title
                  CreatedDate
                  Counter

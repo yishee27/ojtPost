@@ -3,8 +3,29 @@ const dbInsert = require('../config/db.insert');
 const dbDelete = require('../config/db.delete');
 const login = require('../auth/login');
 
+const config = require("../config/db.config");
+
+const Users = require('../models/Users.js');
+const Posts = require('../models/Posts.js');
+const Corps = require('../models/Corps.js');
+
 const logger = require('winston');
 const log = (msg) => logger.info(msg);
+
+const pool = async function () {
+    try {
+        mongoose.connect('mongodb://'+config.user+':'+config.password+'@'+config.host+':'+config.port+'/admin',{dbName:'post', useNewUrlParser: true,useUnifiedTopology: true},function(err){
+            if(err){
+                console.error('mongodb connection err',err);
+            }else {
+                console.log('mongodb connected');
+            };
+        });
+    } catch (err) {
+        console.log("Connection error : " + err);
+        throw err;
+    }
+}
 
 const resolvers = {
     Query: {
@@ -12,24 +33,27 @@ const resolvers = {
         login: async function (_, {UserId, UserPW}) {
             try {
                 let result = await login.login(UserId, UserPW);
-                //log("User Logined with this result : " + JSON.stringify(result));
+                log("User Logined with this result : " + JSON.stringify(result));
                 return result;
+                
             } catch (error) {
                 log(`User Login is failed because of this error : ${error}`);
                 throw error;
             }
         },
 
-        getPosts: async function(_, {Company})  {
+        getPosts: async function(_,{Company})  {
             try {
                 let result = await dbRead.getPosts(Company);
-                //log("getPosts : " + JSON.stringify(result));
+                log("getposts : " + JSON.stringify(result));
                 return result;
             } catch (error) {
-                log(`post list is failed because of this error : ${error}`);
+                //log(`Mypost list is failed because of this error : ${error}`);
                 throw error;
             }
         },
+        
+
 
         getMyposts: async function(_, {UserId})  {
             try {
@@ -120,6 +144,7 @@ const resolvers = {
                     "CreatedDate": CreatedDate,
                 };
                 const result = await dbInsert.createPosts(data);
+                log("createPosts : " + JSON.stringify(result));
                 return { resultCount: result.affectedRows };
             } catch (error) {
                 log(`createPosts error: ${error}`);

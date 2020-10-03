@@ -32,7 +32,6 @@
  
       return {
         fields: [ 
-            {key:"No", label:'No.'},
             {key:"Title", label:'제목'},
             {key:"UserId", label:'작성자'},
             {key:"CreatedDate", label:'날짜'},
@@ -55,7 +54,7 @@
             query: `
               query{
                 getPosts(Company:${Company}){
-                 No
+                 _id
                  Title
                  UserId
                  CreatedDate
@@ -71,7 +70,7 @@
       }, 
       rowClick(item, index, e){
         this.$router.push({
-          path:`/show/${item.No}`
+          path:`/show/${item._id}`
         })
       }  
 
